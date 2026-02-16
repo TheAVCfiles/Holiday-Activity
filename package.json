@@ -4,7 +4,17 @@
   "description": "Repository was created by [Working Copy](https://workingcopy.app/?ct=holiday) to decorate the GitHub Activity Overview.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js",
+    "deploy:local": "hardhat run scripts/local-test.js",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "deploy:base": "hardhat run scripts/deploy.js --network base",
+    "deploy:base-testnet": "hardhat run scripts/deploy.js --network baseTestnet",
+    "deploy:arbitrum": "hardhat run scripts/deploy.js --network arbitrum",
+    "deploy:arbitrum-testnet": "hardhat run scripts/deploy.js --network arbitrumTestnet",
+    "node": "hardhat node",
+    "clean": "hardhat clean"
   },
   "repository": {
     "type": "git",
