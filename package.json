@@ -1,0 +1,22 @@
+{
+  "name": "stageport-ledger-bridge",
+  "version": "1.0.0",
+  "description": "Gasless relay bridge between off-chain ledger (StudioOS) and on-chain Stagecoin contract",
+  "main": "relay.js",
+  "scripts": {
+    "start": "node relay.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blockchain",
+    "relay",
+    "gasless",
+    "stagecoin",
+    "ledger"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.13.0"
+  }
+}
