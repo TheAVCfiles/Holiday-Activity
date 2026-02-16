@@ -1,0 +1,28 @@
+node_modules/
+.env
+coverage/
+coverage.json
+typechain/
+typechain-types/
+
+# Hardhat files
+cache/
+artifacts/
+
+# Vite build
+dist/
+.vite/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.nyc_output
