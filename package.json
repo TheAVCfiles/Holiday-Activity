@@ -1,0 +1,19 @@
+{
+  "name": "holiday-activity",
+  "version": "1.0.0",
+  "description": "Stagecoin and SentientCents ERC20 tokens with royalty-on-transfer",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@openzeppelin/contracts": "^4.9.2",
+    "chai": "^4.3.7",
+    "ethers": "^6.0.0",
+    "hardhat": "^2.16.0"
+  }
+}
