@@ -40,7 +40,6 @@ describe("SentientCents", function () {
   it("only burner role can burn", async function () {
     const minted = ethers.parseUnits("5.00", 2);
     await cents.connect(minter).mint(alice.address, minted);
-    await cents.connect(owner).grantRole(await cents.BURNER_ROLE(), burner.address);
     await cents.connect(burner).burn(alice.address, ethers.parseUnits("1.00", 2));
     expect(await cents.balanceOf(alice.address)).to.equal(ethers.parseUnits("4.00", 2));
   });

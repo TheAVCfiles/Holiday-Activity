@@ -39,7 +39,6 @@ describe("Stagecoin", function () {
   it("Burning works only with BURNER_ROLE", async function () {
     await stage.connect(minter).mint(alice.address, ethers.parseEther("50"));
     // burner can burn alice's tokens (this implementation allows burning from arbitrary address by BURNER_ROLE)
-    await stage.connect(owner).grantRole(await stage.BURNER_ROLE(), burner.address);
     await stage.connect(burner).burn(alice.address, ethers.parseEther("10"));
     expect(await stage.balanceOf(alice.address)).to.equal(ethers.parseEther("40"));
   });

@@ -70,6 +70,7 @@ contract SentientCents is ERC20, AccessControl {
         }
 
         uint256 fee = (amount * royaltyBasisPoints) / 10000;
+        // Gas optimization: avoid two transfers when fee rounds to zero
         if (fee == 0) {
             super._transfer(from, to, amount);
             return;
