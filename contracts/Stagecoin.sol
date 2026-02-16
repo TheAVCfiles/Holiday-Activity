@@ -26,10 +26,10 @@ contract Stagecoin is ERC20, AccessControl {
         uint256 royaltyBps_
     ) ERC20(name_, symbol_) {
         address actualAdmin = admin_ == address(0) ? _msgSender() : admin_;
-        _setupRole(DEFAULT_ADMIN_ROLE, actualAdmin);
-        _setupRole(MINTER_ROLE, actualAdmin);
-        _setupRole(BURNER_ROLE, actualAdmin);
-        _setupRole(ROYALTY_ADMIN_ROLE, actualAdmin);
+        _grantRole(DEFAULT_ADMIN_ROLE, actualAdmin);
+        _grantRole(MINTER_ROLE, actualAdmin);
+        _grantRole(BURNER_ROLE, actualAdmin);
+        _grantRole(ROYALTY_ADMIN_ROLE, actualAdmin);
 
         royaltyRecipient = royaltyRecipient_;
         require(royaltyBps_ <= 10000, "Stagecoin: bp>10000");
