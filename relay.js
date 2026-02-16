@@ -9,7 +9,7 @@ const ethers = require('ethers');
 // --- Configuration ---
 const RPC_URL = process.env.RPC_URL || "http://127.0.0.1:8545"; // Connects to Arb/Base/Localhost
 const RELAYER_PRIVATE_KEY = process.env.RELAYER_PRIVATE_KEY; // The Platform's Wallet (Pays Gas)
-const STAGECOIN_ADDRESS = process.env.STAGECOIN_ADDRESS || "0x..."; // Deployed Contract Address (StagePortTokens.sol)
+const STAGECOIN_ADDRESS = process.env.STAGECOIN_ADDRESS; // Deployed Contract Address (StagePortTokens.sol)
 
 // --- Mock Database (Internal Ledger) ---
 // In production, this is your PostgreSQL/Mongo instance
@@ -17,20 +17,31 @@ const offChainLedger = {
     "user_123": {
         sentientCents: 1250000, // stored as integer (cents)
         lastActivity: Date.now(),
-        walletAddress: "0xUserWalletAddress..."
+        walletAddress: "0x0000000000000000000000000000000000000000" // Replace with actual user wallet
     }
 };
+
+// --- Constants ---
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+const DECAY_THRESHOLD_DAYS = 30;
+const DECAY_RATE_PER_MONTH = 0.01; // 1% decay per month
 
 // --- Helper: Time Burn Calculator ---
 // Replicates the logic in Stagecoin.sol -> applyTimeBurn
 function calculateDecay(userId) {
     const user = offChainLedger[userId];
-    const now = Date.now();
-    const daysInactive = (now - user.lastActivity) / (1000 * 60 * 60 * 24);
+    if (!user) {
+        return 0;
+    }
     
-    // Example: 1% decay per month of inactivity
-    if (daysInactive > 30) {
-        const decayAmount = Math.floor(user.sentientCents * 0.01);
+    const now = Date.now();
+    const daysInactive = (now - user.lastActivity) / MS_PER_DAY;
+    
+    // Calculate decay based on full months of inactivity
+    // 1% decay per month (compounded per month, applied once at bridge time)
+    if (daysInactive > DECAY_THRESHOLD_DAYS) {
+        const monthsInactive = Math.floor(daysInactive / DECAY_THRESHOLD_DAYS);
+        const decayAmount = Math.floor(user.sentientCents * DECAY_RATE_PER_MONTH * monthsInactive);
         return decayAmount;
     }
     return 0;
@@ -39,6 +50,14 @@ function calculateDecay(userId) {
 // --- Main Function: Bridge to Chain ---
 async function bridgeToChain(userId, amountToBridge) {
     console.log(`[RELAY] Initiating Bridge for ${userId}...`);
+
+    // Validate configuration before proceeding
+    if (!RELAYER_PRIVATE_KEY) {
+        throw new Error("RELAYER_PRIVATE_KEY environment variable is required");
+    }
+    if (!STAGECOIN_ADDRESS) {
+        throw new Error("STAGECOIN_ADDRESS environment variable is required");
+    }
 
     // 1. Check Internal Balance
     const user = offChainLedger[userId];
