@@ -1,0 +1,10 @@
+# Deployments Directory
+
+Store deployment logs and configurations here.
+
+Create a file for each deployment named:
+- `testnet-base-sepolia-YYYY-MM-DD.json`
+- `mainnet-base-YYYY-MM-DD.json`
+- etc.
+
+See CHECKLIST.md for deployment log template.
