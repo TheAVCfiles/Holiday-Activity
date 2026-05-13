@@ -8,7 +8,12 @@
     "compile": "hardhat compile",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "deploy:base-sepolia": "hardhat run scripts/deploy.js --network baseSepolia",
+    "verify:sepolia": "hardhat verify --network sepolia",
+    "verify:base-sepolia": "hardhat verify --network baseSepolia"
   },
   "keywords": [
     "blockchain",
@@ -23,6 +28,7 @@
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.14",
     "chai": "^4.3.7",
+    "dotenv": "^16.4.5",
     "hardhat": "^2.12.0",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
