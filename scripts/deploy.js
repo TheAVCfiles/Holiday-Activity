@@ -9,6 +9,8 @@ async function main() {
   const deployerAddress = await deployer.getAddress();
 
   console.log("Deploying contracts with account:", deployerAddress);
+  const balance = await deployer.getBalance();
+  console.log("Account balance:", hre.ethers.utils.formatEther(balance));
 
   const Stagecoin = await hre.ethers.getContractFactory("Stagecoin");
   const stagecoin = await Stagecoin.deploy(
