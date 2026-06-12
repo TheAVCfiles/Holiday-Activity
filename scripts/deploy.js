@@ -18,7 +18,7 @@ async function main() {
     deployerAddress,
     500
   );
-  await stagecoin.deployed();
+  await stagecoin.deployTransaction.wait(1);
 
   console.log("Stagecoin deployed to:", stagecoin.address);
 
