@@ -1,7 +1,11 @@
 const hre = require("hardhat");
 
 async function main() {
-  const [deployer] = await hre.ethers.getSigners();
+  const signers = await hre.ethers.getSigners();
+  if (signers.length === 0) {
+    throw new Error("No deployer account found. Check your network configuration and private keys.");
+  }
+  const deployer = signers[0];
   const deployerAddress = await deployer.getAddress();
 
   console.log("Deploying contracts with account:", deployerAddress);
