@@ -30,7 +30,7 @@ async function main() {
     deployerAddress,
     250
   );
-  await sentientCents.deployed();
+  await sentientCents.deployTransaction.wait(1);
 
   console.log("SentientCents deployed to:", sentientCents.address);
 
